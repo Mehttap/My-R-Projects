@@ -1,0 +1,114 @@
+```{r R ile ilgili notlar}
+
+#R'da kodlar Cntrl+Enter ile çalışır.
+
+#R'da Proje oluşturma: sağ üst köşe proje aç
+
+```
+
+
+```{r aritmetik islemler}
+2+3
+
+```
+
+```{r mantıksal islemler}
+3==1+1
+4<3
+5==5
+
+```
+
+
+```{r vectors}
+id = c(1,2,3)
+ad = c("Ali", "Emrullah", "Ege")
+yas= c(26,27,25)
+rstat = c(T,F,T)
+car= c(NA,NA,NA)
+
+
+ogrenci = data.frame(id,ad,yas,rstat,car)
+
+remove(ogrenci1)
+
+min(ogrenci$yas)
+
+mean(ogrenci$yas)
+#ogrenci DataFrame'inden tek değişken çağırma:
+ogrenci$ad[1]
+
+#ogrenci DataFrame'inden iki değişken çağırma:
+ogrenci$ad[c(1,3)]
+
+#Continues indeksini yapmak istersek(2'den 3'e kdr olanları getir):
+ogrenci$ad[c(2:3)]
+
+#DataFrame içerisine yeni bir sütun açmak:
+ogrenci$math= c(78,NA,98)
+
+#DataFrame'de ogrenci istatistik skorları yarat:
+ogrenci$ist =c(88,66.5,NA)
+
+#Ogrenci'nin içerisindeki istatistik skorları ortalaması
+mean(ogrenci$ist)
+#Not: Verisetinde NA olduğu için R işlemi yapamadı.Biz NA'yı çıkar ve işlemi bu şekilde gerçekleştir diyeceğiz.
+mean(ogrenci$ist, na.rm = T)
+
+#Başka bir nesnenin içerisine kaydet:
+a = mean(ogrenci$ist, na.rm = T)
+
+#Rakam yuvarlama/Ondalık Gösterme Fonksiyonu:
+round(a,1)
+
+#ogrenogrenci#ogrenci1 = cbind(id,ad,yas,rstat,car)
+
+
+```
+
+
+```{r index and subsets}
+ad[1]
+ad[2]
+
+#coklu cagirma
+
+ad[c(1,3)]
+
+yas[yas<27]
+
+#Atama yapma
+yask = yas[yas<27]
+
+print(yask)
+
+
+
+```
+
+```{r paste fonksiyonu}
+#Paste fonksiyonu ile birlestirme
+# Paste : Bosluklu birlestirme yapar / Paste0: Bosluksuz
+
+ad = c("Ali", "Emrullah", "Ege")
+soyad = c("Cebe", "Atik", "Turan")
+adsoyad =paste(ad,soyad)
+
+#Ad ve soyad arasına / işareti koy
+adsoyad =paste(ad,soyad, sep= "/")
+
+#paste0 ile birleştirme ve tolower ile hepsini kücük yazma
+email1= paste0(tolower(ad),tolower(soyad))
+
+#E-maillere @ işareti ekleme
+email2 = paste0(email1, "@vao.edu.tr")
+
+```
+
+
+
+
+
+
+
+
