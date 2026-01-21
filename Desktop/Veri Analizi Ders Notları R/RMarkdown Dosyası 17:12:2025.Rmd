@@ -1,10 +1,157 @@
-```{r R ile ilgili notlar}
 
-#R'da kodlar Cntrl+Enter ile çalışır.
+```{r install packages}
 
-#R'da Proje oluşturma: sağ üst köşe proje aç
+#R'a paket yukleme fonksiyonu ve haven: SPSS'den data çekme fonksiyonu
+install.packages("haven")
+
+#labelled: SPSS'den gelen değişkenlerin değer etiketlerini görme
+install.packages("labelled")
+
+#gtsummary:ozet istatistikleri çıkaran paket
+install.packages("gtsummary")
+
+#tidyverse: veri bilimi için tasarlanmış paket (içerisinde birçok paket var)
+install.packages("tidyverse")
+```
+
+```{r paket calıstırma-library}
+#kütüphaneleri çalıştırma fonksiyonu. Çalıştıktan sonra packages kısmında tik olmalı.
+library(haven)
+library(labelled)
+library(gtsummary)
+library(tidyverse)
 
 ```
+
+```{r data sets}
+#verisetlerini R'a tükleme
+tgss <- read_sav("TGSS  2024.sav", user_na = TRUE)
+gss <- read_sav("2024/GSS2024.sav")
+
+#veriseti içerisindeki değişkene bakmak için iki data için ayrı ayrı sözlük oluşturduk
+tgss1= look_for(tgss)
+
+gss1= look_for(gss)
+
+
+
+
+
+```
+
+```{r tgss decriptive analysis}
+#veriseti içerisindeki age degiskenini cagırdık ve ortalamasını aldık
+mean(tgss$age)
+#Yaş ortalaması küsüratlı çıktı onun ondalık kısmını yuvarladık
+round(mean(tgss$age), 2)
+
+#minimum age olarak yeni küme oluşturup age değişkeninin ortalamasını objeye dönüştürerek environment sayfasında görünmesini sagladık
+magetr= mean(tgss$age)
+
+#obje içine kaydettiğimiz age değişkeninin ortalamasını yuvarladık
+round(magetr,2)
+
+#TGSS veriseti ile GSS verisetindeki age ortalamalarını kıyasla
+
+#magetr=mean(tgss$age)
+#round(magetr,2) bu işlemlerden sonra aynısını GSS veriseti için yaptık
+
+mageusa=mean(gss$age)
+
+#tgss datasetindeki age değişkeninde NA var mı bakma
+anyNA(tgss$age)
+anyNA(gss$age)
+
+#NA olan değişkeni verisetinden sil
+mean(gss$age, na.rm=T)
+
+
+#TGSS ve GSS'deki age değişkenlerinin ortalamalarını kıyasla
+meantr  = mean(tgss$age)
+meanusa = mean(gss$age, na.rm=T)
+aged=meantr-meanusa
+
+#ortalamanın mutlak degerini al
+ageab= abs(aged)
+
+```
+
+```{r stucture}
+#verisetindeki değişkenlerin türlerini öğrenme
+class(tgss$degurba)
+typeof(tgss$degurba)
+#Veri tipi sorgulama ve değişken içerisindeki alt kategorileri görme
+attributes(tgss$degurba)
+
+#değişken numerik mi/kategorik mi sorgulama
+is.factor(tgss$degurba)
+is.numeric(tgss$degurba)
+```
+
+```{r exercise numeric degiskenler}
+#descriptive analysis bilgilerini sorgulama(min/max/mean)
+summary(tgss$age)
+summary(tgss$weight)
+
+a=summary(tgss$weight)
+print(a)
+
+```
+
+
+```{r categoric - factor degiskenleri}
+
+#değişkenin içerisindeki kişi sayısını öğrenme
+table(tgss$degurba)
+
+#değişkenin alt kategorilerinin etiketlerini görme
+table(as_factor(tgss$degurba))
+
+#aynı islemi ayrıca farklı bir sekilde yapabiliriz
+a=as_factor(tgss$degurba)
+is.factor(a)
+table(a)
+
+table(as_factor(tgss$empstr))
+
+
+```
+
+
+
+
+
+
+```{r visuals-görsellestirme}
+
+table(tgss$degurba)
+
+#bar tablosu olusturma
+barplot(table(as_factor(tgss$degurba)),
+        ylim = c(0,2000),
+        xlab = "Yerleşim Türü",
+        ylab = "Sayı",
+        col = "pink")
+
+#pasta grafik (pie chart) yapma
+pie(table(as_factor(tgss$degurba)),
+    ylim=c(0,2000),
+    xlab="Yerleşim Türü",
+    col=c("blue4","green4","red4"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r aritmetik islemler}

@@ -1,0 +1,59 @@
+# ------------------------------
+# R & RStudio
+# ------------------------------
+.Rhistory
+.RData
+.Ruserdata
+*.RData
+*.rda
+
+# RStudio project files
+.Rproj.user/
+
+# ------------------------------
+# Temporary & cache files
+# ------------------------------
+*.tmp
+*.log
+*.bak
+*.swp
+*~
+
+# ------------------------------
+# Knitr / R Markdown
+# ------------------------------
+*_cache/
+*_files/
+*.html
+
+# ------------------------------
+# Data files (raw / large)
+# ------------------------------
+data/raw/
+data/external/
+*.csv
+*.xlsx
+*.sav
+*.dta
+
+# ------------------------------
+# OS files
+# ------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Python (if mixed projects)
+# ------------------------------
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# ------------------------------
+# Credentials / secrets
+# ------------------------------
+.env
+*.key
+*.token
+
