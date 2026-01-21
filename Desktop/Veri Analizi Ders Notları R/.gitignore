@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Large data files
+*.sav
+*.csv
+*.xlsx
+*.pdf
