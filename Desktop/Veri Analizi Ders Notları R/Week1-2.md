@@ -1,0 +1,302 @@
+# R ile ilgili notlar
+
+- R'da kodlar Cntrl+Enter ile çalışır.
+- R'da Proje oluşturma: sağ üst köşe proje aç
+
+
+##### Aritmetik İşlemler
+```
+2+3
+5-2
+```
+##### Mantıksal İşlemler
+```
+3==1+1
+4<3
+5==5
+
+```
+
+##### Vectors
+
+```{r vectors}
+id = c(1,2,3)
+ad = c("Ali", "Emrullah", "Ege")
+yas= c(26,27,25)
+rstat = c(T,F,T)
+car= c(NA,NA,NA)
+
+
+ogrenci = data.frame(id,ad,yas,rstat,car)
+
+remove(ogrenci1)
+
+min(ogrenci$yas)
+
+mean(ogrenci$yas)
+
+```
+
+## Ögrenci DataFrame'den tek değişken çağırma:
+
+```
+ogrenci$ad[1]
+
+```
+## Ögrenci DataFrame'den iki değişken çağırma:
+```
+ogrenci$ad[c(1,3)]
+```
+## Continues indeksini yapmak istersek(2'den 3'e kdr olanları getir):
+```
+ogrenci$ad[c(2:3)]
+```
+
+## DataFrame içerisine yeni bir sütun açmak:
+```
+ogrenci$math= c(78,NA,98)
+```
+
+## DataFrame'de ogrenci istatistik skorları yarat:
+```
+ogrenci$ist =c(88,66.5,NA)
+```
+
+## Ogrenci'nin içerisindeki istatistik skorları ortalaması
+```
+mean(ogrenci$ist)
+
+Not: Verisetinde NA olduğu için R işlemi yapamadı.Biz NA'yı çıkar ve işlemi bu şekilde gerçekleştir diyeceğiz.
+mean(ogrenci$ist, na.rm = T)
+```
+## Başka bir nesnenin içerisine kaydet:
+```
+a = mean(ogrenci$ist, na.rm = T)
+```
+
+## Rakam yuvarlama/Ondalık Gösterme Fonksiyonu:
+```
+round(a,1)
+
+#ogrenogrenci#ogrenci1 = cbind(id,ad,yas,rstat,car)
+
+```
+
+
+## Index and Subsets
+
+```
+ad[1]
+ad[2]
+
+#coklu cagirma
+
+ad[c(1,3)]
+
+yas[yas<27]
+
+#Atama yapma
+yask = yas[yas<27]
+
+print(yask)
+
+```
+## R Paste Function
+```
+#Paste fonksiyonu ile birlestirme
+# Paste : Bosluklu birlestirme yapar / Paste0: Bosluksuz
+
+ad = c("Ali", "Emrullah", "Ege")
+soyad = c("Cebe", "Atik", "Turan")
+adsoyad =paste(ad,soyad)
+
+#Ad ve soyad arasına / işareti koy
+adsoyad =paste(ad,soyad, sep= "/")
+
+#paste0 ile birleştirme ve tolower ile hepsini kücük yazma
+email1= paste0(tolower(ad),tolower(soyad))
+
+#E-maillere @ işareti ekleme
+email2 = paste0(email1, "@vao.edu.tr")
+
+```
+
+{r week 3}
+```
+tgss <- read_sav("TGSS  2024.sav", user_na = TRUE)
+tgss1= look_for(tgss)
+
+```
+
+## Degisken Tur İslemleri
+
+```
+
+table(tgss$gender)
+
+#değişken türünü sor
+is.numeric(tgss$gender)
+
+#değişken türünü numerikten kategorik yap
+table(as_factor(tgss$gender))
+
+#paket içerisindeki değişkenin türünü değiştirme
+table(haven::as_factor(tgss$gender))
+
+#tüm verisetinin türünü değiştirme
+tgss= as_factor(tgss)
+
+#tür değişikliğini sorgulama
+is.factor(tgss$degurba)
+
+```
+## R Install Packages
+
+```
+
+#R'a paket yukleme fonksiyonu ve haven: SPSS'den data çekme fonksiyonu
+install.packages("haven")
+
+#labelled: SPSS'den gelen değişkenlerin değer etiketlerini görme
+install.packages("labelled")
+
+#gtsummary:ozet istatistikleri çıkaran paket
+install.packages("gtsummary")
+
+#tidyverse: veri bilimi için tasarlanmış paket (içerisinde birçok paket var)
+install.packages("tidyverse")
+
+```
+## R Run the Packages
+
+```
+#kütüphaneleri çalıştırma fonksiyonu. Çalıştıktan sonra packages kısmında tik olmalı.
+library(haven)
+library(labelled)
+library(gtsummary)
+library(tidyverse)
+
+```
+## Download Datasets
+```
+#verisetlerini R'a tükleme
+tgss <- read_sav("TGSS  2024.sav", user_na = TRUE)
+gss <- read_sav("2024/GSS2024.sav")
+
+#veriseti içerisindeki değişkene bakmak için iki data için ayrı ayrı sözlük oluşturduk
+tgss1= look_for(tgss)
+
+gss1= look_for(gss)
+
+```
+## R The Datasets' Decriptive Analysis
+```
+#veriseti içerisindeki age degiskenini cagırdık ve ortalamasını aldık
+mean(tgss$age)
+#Yaş ortalaması küsüratlı çıktı onun ondalık kısmını yuvarladık
+round(mean(tgss$age), 2)
+
+#minimum age olarak yeni küme oluşturup age değişkeninin ortalamasını objeye dönüştürerek environment sayfasında görünmesini sagladık
+magetr= mean(tgss$age)
+
+#obje içine kaydettiğimiz age değişkeninin ortalamasını yuvarladık
+round(magetr,2)
+
+#TGSS veriseti ile GSS verisetindeki age ortalamalarını kıyasla
+
+#magetr=mean(tgss$age)
+#round(magetr,2) bu işlemlerden sonra aynısını GSS veriseti için yaptık
+
+mageusa=mean(gss$age)
+
+#tgss datasetindeki age değişkeninde NA var mı bakma
+anyNA(tgss$age)
+anyNA(gss$age)
+
+#NA olan değişkeni verisetinden sil
+mean(gss$age, na.rm=T)
+
+
+#TGSS ve GSS'deki age değişkenlerinin ortalamalarını kıyasla
+meantr  = mean(tgss$age)
+meanusa = mean(gss$age, na.rm=T)
+aged=meantr-meanusa
+
+#ortalamanın mutlak degerini al
+ageab= abs(aged)
+
+```
+# Stucture
+
+```
+#verisetindeki değişkenlerin türlerini öğrenme
+class(tgss$degurba)
+typeof(tgss$degurba)
+#Veri tipi sorgulama ve değişken içerisindeki alt kategorileri görme
+attributes(tgss$degurba)
+
+#değişken numerik mi/kategorik mi sorgulama
+is.factor(tgss$degurba)
+is.numeric(tgss$degurba)
+```
+## Exercise Numeric degiskenler
+```
+#descriptive analysis bilgilerini sorgulama(min/max/mean)
+summary(tgss$age)
+summary(tgss$weight)
+
+a=summary(tgss$weight)
+print(a)
+
+```
+# Categoric - Factor Degiskenleri
+```
+
+#değişkenin içerisindeki kişi sayısını öğrenme
+table(tgss$degurba)
+
+#değişkenin alt kategorilerinin etiketlerini görme
+table(as_factor(tgss$degurba))
+
+#aynı islemi ayrıca farklı bir sekilde yapabiliriz
+a=as_factor(tgss$degurba)
+is.factor(a)
+table(a)
+
+table(as_factor(tgss$empstr))
+
+```
+# r visuals-görsellestirme
+```
+
+table(tgss$degurba)
+
+#bar tablosu olusturma
+barplot(table(as_factor(tgss$degurba)),
+        ylim = c(0,2000),
+        xlab = "Yerleşim Türü",
+        ylab = "Sayı",
+        col = "pink")
+
+#pasta grafik (pie chart) yapma
+pie(table(as_factor(tgss$degurba)),
+    ylim=c(0,2000),
+    xlab="Yerleşim Türü",
+    col=c("blue4","green4","red4"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
