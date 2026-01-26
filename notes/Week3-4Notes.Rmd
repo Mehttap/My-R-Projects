@@ -1,0 +1,182 @@
+```{r ggplot histogram}
+tgss <- read_sav("~/Desktop/Veri Analizi Ders Notları R/TGSS  2024.sav")
+
+tgss1=look_for(tgss)
+#eğitim seyivesi ve gelir seviyesi arasındaki ilişki grafiği
+
+ggplot(tgss, aes(x=educ, y=income))+
+  geom_point(colour="blue", alpha=0.8, size=1)
+
+#grafikteki notların dağılımlı görünümü
+ggplot(tgss, aes(x=educ, y=income))+
+  geom_jitter(width = 1)+
+  geom_smooth(method = "lm", se=T)
+  labs(x="Eğitim",
+       y="Gelir")
+#grafikte çizgi yapımı
+  ggplot(tgss, aes(x=educ,
+                 y=income,
+                 colour=as_factor(gender)))+
+    labs(x="Eğitim",
+       y="Gelir")+
+  geom_jitter(width=1)+
+  geom_smooth(method="lm", se=T, fill="red",alpha=0.8, size=1, colour="navy")
+
+#grafiğin yanında yer alan renk/metin kısmının yerini değiştirme (legend)
+  #sub(alt)gruplara göre değişiklik yapma
+ggplot(tgss, aes(x=educ,
+                 y=income,
+                 colour=as_factor(gender)))+
+    labs(x="Eğitim",
+       y="Gelir")+
+  theme_bw()+
+   theme(legend.position = "bottom")+
+  geom_jitter(width=1)+
+  geom_smooth(method="lm", se=T)
+#kadın ve erkek değişkenlerine renk atama (scale_colour_manuel)
+ggplot(tgss, aes(x=educ,
+                 y=income,
+                 colour = as_factor(gender)))+
+  geom_jitter(width = 1)+
+  geom_smooth(method = "lm", se=T)+
+  labs(x="Eğitim",
+       y="Gelir")+
+  scale_colour_manual(values = c("Erkek"="navy", "Kadın"="purple2"))+
+  theme_bw()+
+  theme(legend.position = "bottom")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r ggplot exercies 2}
+
+#Oluşturulan grafiği PC'ye kayıt
+#önce kodu bir nesne olarak kaydet (a yaptık)
+#daha sonra print(nesne)
+
+a=ggplot(data=tgss)+
+  geom_bar(aes(x=as_factor(gender)))+
+  labs(x="Cinsiyet",
+       y="Sayı")+
+  coord_flip()+
+  theme_bw()
+
+print(a)
+
+#daha sonra console' gel a yaz, o zaman plot kısmına geliyor oradan exporttan çıktı al
+
+#ggplot'ta pc'ye dosya/resim kaydetme
+
+ggsave(filename ="/Users/mehtapbuyukguzel/Desktop/Veri Analizi Ders Notları R/My-R-Projects/ggpic/res 1.png",
+       plot = a,
+       dpi = 300,
+       width = 17,
+       height = 4,
+       units = "cm")
+
+
+
+
+
+
+```
+
+```{r ggplot exercises 1}
+#datasetine erişim ve tek değişken ekleme
+ggplot(data=tgss, aes(x=gender))
+#bar grafiği oluşturma
+ggplot(data=tgss, aes(x=gender))+
+  geom_bar()
+#artık data=gender demeye gerek kalmadan direkt tgss diyoruz
+ggplot(tgss, aes(x=degurba))+
+  geom_bar()
+#histogram grafiği oluşturma
+ggplot(tgss, aes(x=as.numeric(educ)))+
+  geom_histogram()
+#sütunların renklerini değiştirme
+ggplot(tgss, aes(x=degurba))+ 
+  geom_bar(fill="navy", alpha=0.8)
+#sütun kenarına çerçeve(renk)ekleme
+ggplot(tgss, aes(x=degurba))+
+  geom_bar(fill="navy", alpha=0.8, colour="red")
+#sütun kenarındaki çerçeveyi kalınlaştırma
+ggplot(tgss, aes(x=as_factor(marital)))+
+  geom_bar(fill="pink", colour="black", linetype=1, linewidth = 1)
+
+#satır ve sütun ismi ekleme/değiştirme
+ggplot(data = tgss, aes(x=degurba))+
+  geom_bar(fill="navy", alpha=0.8, colour="red", linewidth = 1)+
+  labs(x="Kentleşme",
+       y="Sayı")
+ #grafiğin arkasındaki gri fontu değiştirme (theme() ya da theme_bw()-black and white)
+ggplot(data = tgss, aes(x=degurba))+
+  geom_bar(fill="navy", alpha=0.8, colour="red", linewidth = 1)+
+  labs(x="Kentleşme",
+       y="Sayı")+
+theme_bw()
+#grafik yönünü değiştirme (coord_flip)
+ggplot(data = tgss, aes(x=degurba))+
+  geom_bar(fill="navy", alpha=0.8, colour="red", linewidth = 1)+
+  labs(x="Kentleşme",
+       y="Sayı")+
+theme_bw()+
+  coord_flip()
+
+
+
+
+```
+
+```{r veriseti tür değişimi}
+
+#tgss datası içerisindeki kadın-erkek sayısını gör
+table(tgss$gender)
+#Değişkenin türünü öğrenme
+is.numeric(tgss$gender)
+#verisetindeki numeric değişkenlerin isimlerini görmek için kategorik hale getirme
+table(as_factor(tgss$gender))
+#bir paketin içerisindeki değişkenin türünü değiştirme (örn. haven paketi)
+table(haven:: as_factor(tgss$gender))
+#tüm verisetinin/dosyanın değişken türünü değiştir
+tgss=as_factor(tgss)
+#değişmiş mi kontrol et (herhangi bir değişkenle)
+is.factor(tgss$degurba)
+
+
+```
+
+```{r install packages}
+
+install.packages("haven")
+install.packages("labelled")
+install.packages("gtsummary")
+install.packages("tidyverse")
+```
+
+```{r run the packages}
+library(haven)
+library(labelled)
+library(gtsummary)
+library(tidyverse)
+
+```
+
+```{r take the dataset in the R}
+tgss <- read_sav("~/Desktop/Veri Analizi Ders Notları R/TGSS  2024.sav")
+tgss1=look_for(tgss)
+
+
+```
+

@@ -1,3 +1,48 @@
+```{r week 3}
+tgss <- read_sav("TGSS  2024.sav", user_na = TRUE)
+tgss1= look_for(tgss)
+
+```
+
+```{r Degisken Tur İslemleri}
+
+table(tgss$gender)
+#değişken türünü sor
+is.numeric(tgss$gender)
+#değişken türünü numerikten kategorik yap
+table(as_factor(tgss$gender))
+#paket içerisindeki değişkenin türünü değiştirme
+table(haven::as_factor(tgss$gender))
+#tüm verisetinin türünü değiştirme
+tgss= as_factor(tgss)
+#tür değişikliğini sorgulama
+is.factor(tgss$degurba)
+
+```
+
+```{r ggplot exercise 1}
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r install packages}
 
@@ -98,7 +143,6 @@ print(a)
 
 ```
 
-
 ```{r categoric - factor degiskenleri}
 
 #değişkenin içerisindeki kişi sayısını öğrenme
@@ -116,11 +160,6 @@ table(as_factor(tgss$empstr))
 
 
 ```
-
-
-
-
-
 
 ```{r visuals-görsellestirme}
 
@@ -140,6 +179,19 @@ pie(table(as_factor(tgss$degurba)),
     col=c("blue4","green4","red4"))
 
 ```
+
+
+```{r tgss packages}
+tgss <- read_sav("TGSS  2024.sav", user_na = TRUE)
+tgss1= look_for(tgss)
+
+
+```
+
+
+
+
+
 
 
 
@@ -165,7 +217,6 @@ pie(table(as_factor(tgss$degurba)),
 5==5
 
 ```
-
 
 ```{r vectors}
 id = c(1,2,3)
